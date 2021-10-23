@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+option go_package = "github.com/mayerkv/go-recruitments/recruitment-service;recruitment_service";
+
+service RecruitmentService {
+  rpc PostVacancy(PostVacancyRequest) returns (PostVacancyResponse) {}
+}
+
+message PostVacancyRequest {}
+message PostVacancyResponse {}

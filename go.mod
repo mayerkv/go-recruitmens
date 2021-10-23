@@ -1,4 +1,4 @@
-module github.com/mayerkv/go-recruitments
+module github.com/mayerkv/go-recruitmens
 
 go 1.17
 

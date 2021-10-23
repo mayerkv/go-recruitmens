@@ -2,7 +2,7 @@ package main
 
 import (
 	"context"
-	"github.com/mayerkv/go-recruitments/recruitment-service"
+	"github.com/mayerkv/go-recruitmens/recruitment-service"
 	"google.golang.org/grpc"
 	"log"
 	"net"

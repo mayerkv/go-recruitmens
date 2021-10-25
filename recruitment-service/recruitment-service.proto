@@ -6,5 +6,9 @@ service RecruitmentService {
   rpc PostVacancy(PostVacancyRequest) returns (PostVacancyResponse) {}
 }
 
-message PostVacancyRequest {}
-message PostVacancyResponse {}
+message PostVacancyRequest {
+  string message = 1;
+}
+message PostVacancyResponse {
+  string message = 1;
+}

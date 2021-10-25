@@ -6,6 +6,7 @@ import (
 	"google.golang.org/grpc"
 	"log"
 	"net"
+	"os"
 )
 
 func main() {
@@ -33,7 +34,9 @@ func newRecruitmentServiceServer() recruitment_service.RecruitmentServiceServer 
 }
 
 func (s *recruitmentServiceServer) PostVacancy(ctx context.Context, request *recruitment_service.PostVacancyRequest) (*recruitment_service.PostVacancyResponse, error) {
-	log.Println(request)
+	log.Println(request.Message)
 
-	return &recruitment_service.PostVacancyResponse{}, nil
+	return &recruitment_service.PostVacancyResponse{
+		Message: os.Getenv("HOSTNAME"),
+	}, nil
 }

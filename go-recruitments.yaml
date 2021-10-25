@@ -5,7 +5,7 @@ metadata:
   labels:
     app: recruitments
 spec:
-  replicas: 10
+  replicas: 2
   selector:
     matchLabels:
       app: recruitments
@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: recruitments
-          image: go-recruitmens:latest
+          image: go-recruitments:latest
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 9090

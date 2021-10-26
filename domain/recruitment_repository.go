@@ -8,9 +8,10 @@ const (
 )
 
 type Pageable struct {
-	Page int
-	Size int
-
+	Page           int
+	Size           int
+	OrderBy        string
+	OrderPredicate Predicate
 }
 
 type RecruitmentPage struct {
@@ -22,7 +23,8 @@ type RecruitmentPage struct {
 
 type RecruitmentRepository interface {
 	Save(recruitment *Recruitment) error
+	SaveAll(recruitment ...*Recruitment) error
 	FindById(id string) (*Recruitment, error)
-	FindAllByResponsible(responsibleId string, page int, size int, orderBy string, orderPredicate int) (RecruitmentPage, error)
-	FindAll(page int, size int, orderBy string, orderPredicate int)
+	FindAllByResponsible(responsibleId string, pageable Pageable) (RecruitmentPage, error)
+	FindAll(pageable Pageable) (RecruitmentPage, error)
 }

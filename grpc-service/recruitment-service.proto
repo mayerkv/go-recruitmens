@@ -70,6 +70,7 @@ message ConsiderCandidateResponse {
 
 message AcceptRecruitmentStageRequest {
   string recruitmentId = 1;
+  string requestedStageId = 2;
 }
 
 message DenyRecruitmentRequest {

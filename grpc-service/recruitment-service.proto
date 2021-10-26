@@ -1,0 +1,200 @@
+syntax = "proto3";
+
+option go_package = "github.com/mayerkv/go-recruitments/grpc-service;grpc_service";
+
+service RecruitmentService {
+  // vacancies
+  rpc PostVacancy(PostVacancyRequest) returns (PostVacancyResponse) {}
+  rpc ShowVacancies(ShowVacanciesRequest) returns (ShowVacanciesResponse) {}
+  rpc SearchVacancies(SearchVacanciesRequest) returns (SearchVacanciesResponse) {}
+  rpc ChangeVacancyPosition(ChangeVacancyPositionRequest) returns (Empty) {}
+  rpc ApproveVacancy(ApproveVacancyRequest) returns (Empty) {}
+  rpc CloseVacancy(CloseVacancyRequest) returns (Empty) {}
+  rpc RejectVacancy(RejectVacancyRequest) returns (Empty) {}
+  rpc TakeInWorkVacancy(TakeInWorkVacancyRequest) returns (Empty) {}
+  rpc GetVacancy(GetVacancyRequest) returns (GetVacancyResponse) {}
+
+  // recruitment
+  rpc ConsiderCandidate(ConsiderCandidateRequest) returns (ConsiderCandidateResponse) {}
+  rpc ConsiderCandidateAnotherVacancy(ConsiderCandidateAnotherVacancyRequest) returns (ConsiderCandidateAnotherVacancyResponse) {}
+  rpc AcceptRecruitmentStage(AcceptRecruitmentStageRequest) returns (Empty) {}
+  rpc DenyRecruitment(DenyRecruitmentRequest) returns (Empty) {}
+  rpc GetRecruitment(GetRecruitmentRequest) returns (GetRecruitmentResponse) {}
+  rpc ShowRecruitments(ShowRecruitmentRequest) returns (ShowRecruitmentsResponse) {}
+}
+
+message PostVacancyRequest {
+  string positionId = 1;
+  string customerId = 2;
+}
+
+message PostVacancyResponse {
+  string vacancyId = 1;
+}
+
+message ShowVacanciesRequest {
+  string customerId = 1;
+  int32 page = 2;
+  int32 size = 3;
+  Vacancy.Order orderBy = 4;
+  OrderDirection orderDirection = 5;
+}
+
+message ShowVacanciesResponse {
+  repeated Vacancy list = 1;
+  int32 count = 2;
+}
+
+message SearchVacanciesRequest {
+  int32 page = 1;
+  int32 size = 2;
+  Vacancy.Order orderBy = 3;
+  OrderDirection orderDirection = 4;
+}
+
+message SearchVacanciesResponse {
+  repeated Vacancy list = 1;
+  int32 count = 2;
+}
+
+message ConsiderCandidateRequest {
+  string vacancyId = 1;
+  string candidateId = 2;
+  string responsibleId = 3;
+  repeated StageLineSettings settings = 4;
+}
+
+message ConsiderCandidateResponse {
+  string recruitmentId = 1;
+}
+
+message AcceptRecruitmentStageRequest {
+  string recruitmentId = 1;
+}
+
+message DenyRecruitmentRequest {
+  string recruitmentId = 1;
+}
+
+message ChangeVacancyPositionRequest {
+  string vacancyId = 1;
+  string positionId = 2;
+}
+
+message Empty {}
+
+message ApproveVacancyRequest {
+  string vacancyId = 1;
+}
+
+message CloseVacancyRequest {
+  string vacancyId = 1;
+}
+
+message RejectVacancyRequest {
+  string vacancyId = 1;
+}
+
+message TakeInWorkVacancyRequest {
+  string vacancyId = 1;
+}
+
+message ConsiderCandidateAnotherVacancyRequest {
+  string recruitmentId = 1;
+  string vacancyId = 2;
+}
+
+message ConsiderCandidateAnotherVacancyResponse {
+  string recruitmentId = 1;
+}
+
+message GetVacancyRequest {
+  string vacancyId = 1;
+}
+
+message GetVacancyResponse {
+  Vacancy vacancy = 1;
+}
+
+message GetRecruitmentRequest {
+  string recruitmentId = 1;
+}
+
+message GetRecruitmentResponse {
+  Recruitment recruitment = 1;
+}
+
+message ShowRecruitmentRequest {
+  string responsibleId = 1;
+  int32 page = 2;
+  int32 size = 3;
+  Recruitment.Order orderBy = 4;
+  OrderDirection orderDirection = 5;
+}
+
+message ShowRecruitmentsResponse {
+
+}
+
+enum OrderDirection {
+  ASC = 0;
+  DESC = 1;
+}
+
+message Vacancy {
+  string id = 1;
+  string positionId = 2;
+  string customerId = 3;
+  string createdAt = 4;
+  enum Status {
+    PENDING = 0;
+    AGREED = 1;
+    REJECTED = 2;
+    IN_WORK = 3;
+    CLOSED = 4;
+  }
+  Status status = 5;
+
+  enum Order {
+    CREATED_AT = 0;
+  }
+}
+
+message Recruitment {
+  string id = 1;
+  string candidateId = 2;
+  string responsibleId = 3;
+  string createdAt = 4;
+  StageLine stageLine = 5;
+  Vacancy vacancy = 6;
+  RefuseReason refuseReason = 7;
+
+  enum Order {
+    CREATED_AT = 0;
+  }
+}
+
+message StageLineSettings {
+  string stageId = 1;
+  int32 DeadlineDurationSec = 2;
+  int32 ThresholdDurationSec = 3;
+}
+
+message StageLineItem {
+  string stageId = 1;
+  string startDate = 2;
+  string finishDate = 3;
+  string DeadlineDate = 4;
+  string ThresholdDate = 5;
+}
+
+message StageLine {
+  string stageId = 1;
+  repeated StageLineSettings settings = 2;
+  map<string, StageLineItem> history = 3;
+}
+
+message RefuseReason {
+  string reasonId = 1;
+  string comment = 2;
+}

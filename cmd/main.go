@@ -2,7 +2,7 @@ package main
 
 import (
 	"context"
-	"github.com/mayerkv/go-recruitmens/recruitment-service"
+	"github.com/mayerkv/go-recruitmens/grpc-service"
 	"google.golang.org/grpc"
 	"log"
 	"net"
@@ -18,7 +18,7 @@ func main() {
 	var opts []grpc.ServerOption
 	grpcServer := grpc.NewServer(opts...)
 
-	recruitment_service.RegisterRecruitmentServiceServer(grpcServer, newRecruitmentServiceServer())
+	grpc_service.RegisterRecruitmentServiceServer(grpcServer, newRecruitmentServiceServer())
 
 	if err := grpcServer.Serve(lis); err != nil {
 		log.Fatal(err)
@@ -26,17 +26,17 @@ func main() {
 }
 
 type recruitmentServiceServer struct {
-	recruitment_service.UnimplementedRecruitmentServiceServer
+	grpc_service.UnimplementedRecruitmentServiceServer
 }
 
-func newRecruitmentServiceServer() recruitment_service.RecruitmentServiceServer {
+func newRecruitmentServiceServer() grpc_service.RecruitmentServiceServer {
 	return &recruitmentServiceServer{}
 }
 
-func (s *recruitmentServiceServer) PostVacancy(ctx context.Context, request *recruitment_service.PostVacancyRequest) (*recruitment_service.PostVacancyResponse, error) {
+func (s *recruitmentServiceServer) PostVacancy(ctx context.Context, request *grpc_service.PostVacancyRequest) (*grpc_service.PostVacancyResponse, error) {
 	log.Println(request.Message)
 
-	return &recruitment_service.PostVacancyResponse{
+	return &grpc_service.PostVacancyResponse{
 		Message: os.Getenv("HOSTNAME"),
 	}, nil
 }

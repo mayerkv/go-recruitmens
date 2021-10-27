@@ -103,9 +103,9 @@ func (s *RecruitmentService) DenyRecruitment(recruitmentId, reasonId, comment st
 }
 
 func (s *RecruitmentService) GetRecruitment(recruitmentId string) (*Recruitment, error) {
-
+	return s.getRecruitment(recruitmentId)
 }
 
 func (s *RecruitmentService) ShowRecruitments(responsibleId string, pageable Pageable) (RecruitmentPage, error) {
-
+	return s.recruitmentRepository.FindAllByResponsible(responsibleId, pageable)
 }

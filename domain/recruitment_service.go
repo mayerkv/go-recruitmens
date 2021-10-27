@@ -11,6 +11,10 @@ type RecruitmentService struct {
 	vacancyRepository     VacancyRepository
 }
 
+func NewRecruitmentService(recruitmentRepository RecruitmentRepository, vacancyRepository VacancyRepository) *RecruitmentService {
+	return &RecruitmentService{recruitmentRepository: recruitmentRepository, vacancyRepository: vacancyRepository}
+}
+
 func (s *RecruitmentService) getVacancy(vacancyId string) (*Vacancy, error) {
 	vacancy, err := s.vacancyRepository.FindById(vacancyId)
 	if err != nil {

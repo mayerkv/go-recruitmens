@@ -10,6 +10,10 @@ type VacancyService struct {
 	vacancyRepository VacancyRepository
 }
 
+func NewVacancyService(vacancyRepository VacancyRepository) *VacancyService {
+	return &VacancyService{vacancyRepository: vacancyRepository}
+}
+
 func (s *VacancyService) PostVacancy(positionId, customerId string) (*Vacancy, error) {
 	vacancy := CreateVacancy(positionId, customerId)
 

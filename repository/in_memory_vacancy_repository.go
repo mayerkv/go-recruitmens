@@ -37,19 +37,17 @@ func (r *InMemoryVacancyRepository) FindById(id string) (*domain.Vacancy, error)
 	return nil, nil
 }
 
+// FindAllByCustomer todo sort
 func (r *InMemoryVacancyRepository) FindAllByCustomer(customerId string, pageable domain.Pageable) (domain.VacancyPage, error) {
 	r.Lock()
 	defer r.Unlock()
 
 	var vacanciesByCustomer []domain.Vacancy
-
 	for _, item := range r.items {
 		if item.CustomerId == customerId {
 			vacanciesByCustomer = append(vacanciesByCustomer, item)
 		}
 	}
-
-	// todo sort
 
 	page := domain.VacancyPage{
 		Items:      r.skip(vacanciesByCustomer, pageable),
@@ -61,6 +59,7 @@ func (r *InMemoryVacancyRepository) FindAllByCustomer(customerId string, pageabl
 	return page, nil
 }
 
+// FindAll todo sort
 func (r *InMemoryVacancyRepository) FindAll(pageable domain.Pageable) (domain.VacancyPage, error) {
 	r.Lock()
 	defer r.Unlock()

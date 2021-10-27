@@ -47,7 +47,7 @@ func mapVacancy(vacancy *domain.Vacancy) *Vacancy {
 		Id:         vacancy.Id,
 		PositionId: vacancy.PositionId,
 		CustomerId: vacancy.CustomerId,
-		CreatedAt:  vacancy.CreatedAt.String(),
+		CreatedAt:  vacancy.CreatedAt.Format(time.RFC3339),
 		Status:     mapVacancyStatus(vacancy.Status),
 	}
 }
@@ -91,7 +91,7 @@ func mapRecruitment(recruitment *domain.Recruitment) *Recruitment {
 		Id:            recruitment.Id,
 		CandidateId:   recruitment.CandidateId,
 		ResponsibleId: recruitment.ResponsibleId,
-		CreatedAt:     recruitment.CreatedAt.String(),
+		CreatedAt:     recruitment.CreatedAt.Format(time.RFC3339),
 		StageLine:     mapStageLine(recruitment.StageLine),
 		Vacancy:       mapVacancy(recruitment.Vacancy),
 		RefuseReason:  mapRefuseReason(recruitment.RefuseReason),
@@ -138,22 +138,22 @@ func mapStageLineItem(item *domain.StageLineItem) *StageLineItem {
 
 	var startDate string
 	if !item.StartDate.IsZero() {
-		startDate = item.StartDate.String()
+		startDate = item.StartDate.Format(time.RFC3339)
 	}
 
 	var finishDate string
 	if !item.FinishDate.IsZero() {
-		finishDate = item.FinishDate.String()
+		finishDate = item.FinishDate.Format(time.RFC3339)
 	}
 
 	var deadlineDate string
 	if !item.DeadlineDate.IsZero() {
-		deadlineDate = item.DeadlineDate.String()
+		deadlineDate = item.DeadlineDate.Format(time.RFC3339)
 	}
 
 	var thresholdDate string
 	if !item.FinishDate.IsZero() {
-		thresholdDate = item.FinishDate.String()
+		thresholdDate = item.FinishDate.Format(time.RFC3339)
 	}
 
 	return &StageLineItem{

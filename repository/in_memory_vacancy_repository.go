@@ -80,11 +80,15 @@ func (r *InMemoryVacancyRepository) FindAll(pageable domain.Pageable) (domain.Va
 }
 
 func (r *InMemoryVacancyRepository) skip(vacancies []domain.Vacancy, pageable domain.Pageable) []domain.Vacancy {
-	var items []domain.Vacancy
-	skip := (pageable.Page - 1) * pageable.Size
-	if len(vacancies) >= skip {
-		items = vacancies[skip : skip+pageable.Size]
+	start := (pageable.Page - 1) * pageable.Size
+	if start > len(vacancies)-1 {
+		return []domain.Vacancy{}
 	}
 
-	return items
+	end := start + pageable.Size
+	if end > len(vacancies)-1 {
+		return vacancies[start:]
+	}
+
+	return vacancies[start:end]
 }

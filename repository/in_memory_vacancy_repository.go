@@ -62,7 +62,22 @@ func (r *InMemoryVacancyRepository) FindAllByCustomer(customerId string, pageabl
 }
 
 func (r *InMemoryVacancyRepository) FindAll(pageable domain.Pageable) (domain.VacancyPage, error) {
-	panic("implement me")
+	r.Lock()
+	defer r.Unlock()
+
+	var vacancies []domain.Vacancy
+	for _, item := range r.items {
+		vacancies = append(vacancies, item)
+	}
+
+	page := domain.VacancyPage{
+		Items:      r.skip(vacancies, pageable),
+		TotalCount: len(vacancies),
+		Page:       pageable.Page,
+		Size:       pageable.Size,
+	}
+
+	return page, nil
 }
 
 func (r *InMemoryVacancyRepository) skip(vacancies []domain.Vacancy, pageable domain.Pageable) []domain.Vacancy {

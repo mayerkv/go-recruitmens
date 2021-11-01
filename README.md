@@ -8,3 +8,7 @@ protoc --go_out=. --go_opt=paths=source_relative \
   --go-grpc_out=. --go-grpc_opt=paths=source_relative \
   grpc-service/recruitment-service.proto
 ```
+
+```shell
+docker build -t go-recruitments:latest .
+```

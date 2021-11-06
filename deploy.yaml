@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: recruitments
-          image: go-recruitments:latest
+          image: kvmayer/go-recruitments:latest
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 9090

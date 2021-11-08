@@ -92,4 +92,11 @@ func main() {
 	}
 
 	fmt.Printf("%#v", considerCandidateResponse.RecruitmentId)
+
+	getRecruitmentResponse, err := client.GetRecruitment(ctx, &grpc_service.GetRecruitmentRequest{RecruitmentId: considerCandidateResponse.RecruitmentId})
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Println(getRecruitmentResponse.Recruitment)
 }

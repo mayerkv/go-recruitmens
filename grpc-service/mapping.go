@@ -122,7 +122,7 @@ func mapStageLine(line *domain.StageLine) *StageLine {
 }
 
 func mapStageLineHistory(history map[string]*domain.StageLineItem) map[string]*StageLineItem {
-	var res map[string]*StageLineItem
+	res := map[string]*StageLineItem{}
 
 	for id, item := range history {
 		res[id] = mapStageLineItem(item)
